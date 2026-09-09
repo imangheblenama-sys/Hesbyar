@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حساب‌یار | مدیریت حساب و امور مالی کسب‌وکارها</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F3EEE1;
+    --cream-deep:#EAE2CE;
+    --ink:#20303D;
+    --ink-soft:#4B5C68;
+    --phosphor:#5FD4E8;
+    --phosphor-deep:#2FA8C4;
+    --call-blue:#0B4F9E;
+    --call-blue-light:#1E74D6;
+    --white:#FFFDF8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Vazirmatn',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+
+  /* NAV */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(243,238,225,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(32,48,61,0.08);
+  }
+  .nav-wrap{
+    max-width:1180px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;
+  }
+  .logo{font-size:20px;font-weight:700;color:var(--ink);}
+  .logo span{color:var(--phosphor-deep);}
+  nav ul{display:flex;gap:8px;list-style:none;}
+  nav ul li a{
+    display:inline-block;padding:10px 18px;
+    border-radius:8px;
+    font-size:14px;font-weight:500;
+    color:var(--ink-soft);
+    transition:background .2s ease, color .2s ease;
+  }
+  nav ul li a:hover{background:rgba(95,212,232,0.18);color:var(--ink);}
+  .nav-cta{
+    background:var(--phosphor);
+    color:var(--ink);
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:600;
+    font-size:14px;
+    transition:transform .15s ease, background .2s ease;
+  }
+  .nav-cta:hover{background:var(--phosphor-deep);}
+  .nav-cta:active{transform:scale(0.97);}
+  .menu-toggle{display:none;font-size:22px;background:none;color:var(--ink);}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    min-height:640px;
+    display:flex;align-items:center;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    z-index:0;
+  }
+  .hero-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(243,238,225,0.15) 0%, rgba(243,238,225,0.55) 65%, var(--cream) 100%);
+    z-index:1;
+  }
+  .hero-content{
+    position:relative;z-index:2;
+    max-width:1180px;margin:0 auto;
+    width:100%;
+    padding:60px 24px;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:40px;
+    align-items:center;
+  }
+  .hero-text h1{
+    font-size:38px;
+    line-height:1.5;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:18px;
+  }
+  .hero-text p{
+    font-size:16px;
+    line-height:1.9;
+    color:var(--ink-soft);
+    max-width:480px;
+    margin-bottom:28px;
+  }
+  .hero-badges{display:flex;gap:12px;flex-wrap:wrap;}
+  .badge{
+    background:rgba(255,253,248,0.85);
+    border:1px solid rgba(32,48,61,0.1);
+    padding:8px 14px;border-radius:8px;
+    font-size:13px;color:var(--ink-soft);
+  }
+
+  /* FORM CARD */
+  .signup-card{
+    background:var(--white);
+    border-radius:10px;
+    padding:32px;
+    box-shadow:0 18px 40px rgba(32,48,61,0.14);
+    border:1px solid rgba(32,48,61,0.06);
+  }
+  .signup-card h2{font-size:19px;margin-bottom:6px;color:var(--ink);}
+  .signup-card p.sub{font-size:13px;color:var(--ink-soft);margin-bottom:22px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13px;color:var(--ink-soft);margin-bottom:6px;}
+  .field input{
+    width:100%;
+    padding:13px 14px;
+    border-radius:8px;
+    border:1px solid rgba(32,48,61,0.15);
+    font-family:inherit;font-size:14px;
+    background:var(--cream);
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .field input:focus{
+    outline:none;
+    border-color:var(--phosphor-deep);
+    box-shadow:0 0 0 3px rgba(95,212,232,0.25);
+  }
+  .field .err{color:#B23B3B;font-size:12px;margin-top:5px;display:none;}
+  .submit-btn{
+    width:100%;
+    padding:14px;
+    border-radius:8px;
+    background:var(--phosphor-deep);
+    color:var(--white);
+    font-size:15px;font-weight:600;
+    transition:background .2s ease, transform .15s ease;
+  }
+  .submit-btn:hover{background:#278FA8;}
+  .submit-btn:active{transform:scale(0.98);}
+  .success-msg{
+    display:none;
+    margin-top:14px;
+    padding:12px 14px;
+    border-radius:8px;
+    background:rgba(95,212,232,0.15);
+    color:#1B6B7D;
+    font-size:13px;
+  }
+
+  /* TRUST STRIP */
+  .trust{
+    max-width:1180px;margin:0 auto;
+    padding:50px 24px;
+    text-align:center;
+  }
+  .trust h3{font-size:15px;color:var(--ink-soft);font-weight:500;margin-bottom:24px;}
+  .trust-logos{
+    display:flex;justify-content:center;gap:40px;flex-wrap:wrap;
+    color:var(--ink-soft);font-weight:600;font-size:15px;opacity:.65;
+  }
+
+  /* FEATURES */
+  .features{
+    background:var(--cream-deep);
+    padding:70px 24px;
+  }
+  .features-inner{max-width:1180px;margin:0 auto;}
+  .features h2{font-size:26px;text-align:center;margin-bottom:44px;color:var(--ink);}
+  .feature-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .feature-card{
+    background:var(--white);
+    border-radius:10px;
+    padding:26px;
+    border:1px solid rgba(32,48,61,0.06);
+  }
+  .feature-card .icon{
+    width:44px;height:44px;
+    border-radius:8px;
+    background:rgba(95,212,232,0.2);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:16px;
+    font-size:20px;color:var(--phosphor-deep);
+  }
+  .feature-card h4{font-size:16px;margin-bottom:8px;color:var(--ink);}
+  .feature-card p{font-size:13.5px;line-height:1.8;color:var(--ink-soft);}
+
+  footer{
+    padding:30px 24px;
+    text-align:center;
+    font-size:13px;
+    color:var(--ink-soft);
+    border-top:1px solid rgba(32,48,61,0.08);
+  }
+
+  /* FLOATING CALL BUTTON */
+  .call-fab{
+    position:fixed;
+    bottom:26px;
+    left:26px;
+    width:58px;height:58px;
+    border-radius:50%;
+    background:var(--call-blue);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--white);
+    font-size:24px;
+    z-index:100;
+    box-shadow:0 8px 20px rgba(11,79,158,0.35);
+    animation:pulseGlow 2.2s ease-in-out infinite;
+  }
+  @keyframes pulseGlow{
+    0%,100%{background:var(--call-blue); box-shadow:0 8px 20px rgba(11,79,158,0.35);}
+    50%{background:var(--call-blue-light); box-shadow:0 8px 26px rgba(30,116,214,0.55);}
+  }
+
+  @media (max-width:880px){
+    nav ul{display:none;}
+    .menu-toggle{display:block;}
+    .hero-content{grid-template-columns:1fr;}
+    .hero-text h1{font-size:28px;}
+    .feature-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="logo">حساب<span>یار</span></div>
+    <nav><ul>
+      <li><a href="#signup">ثبت‌نام و ورود</a></li>
+      <li><a href="#trust">نمونه معاملات انجام‌شده</a></li>
+      <li><a href="#support">پشتیبانی</a></li>
+    </ul></nav>
+    <a href="#signup" class="nav-cta">ثبت‌نام</a>
+    <button class="menu-toggle" aria-label="منو">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg">
+    <svg viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+      <rect width="1440" height="720" fill="#EFE6D0"/>
+      <rect width="1440" height="720" fill="url(#skyGrad)"/>
+      <defs>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F6EFD9"/>
+          <stop offset="60%" stop-color="#EFE2C4"/>
+          <stop offset="100%" stop-color="#E6D9B8"/>
+        </linearGradient>
+      </defs>
+      <circle cx="1180" cy="150" r="70" fill="#F7D488" opacity="0.8"/>
+      <path d="M0,420 L180,240 L340,400 L520,190 L720,410 L900,230 L1100,400 L1260,260 L1440,410 L1440,720 L0,720 Z" fill="#B7C9B0" opacity="0.55"/>
+      <path d="M0,480 L220,300 L420,470 L640,270 L860,460 L1080,300 L1300,470 L1440,340 L1440,720 L0,720 Z" fill="#8FA789" opacity="0.7"/>
+      <path d="M0,560 L260,410 L500,560 L760,380 L1020,560 L1260,420 L1440,560 L1440,720 L0,720 Z" fill="#5F7A5B"/>
+      <rect x="0" y="600" width="1440" height="120" fill="#4A6349"/>
+    </svg>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>مدیریت حساب و امور مالی کسب‌وکار شما، با اعتماد شرکت‌های بزرگ</h1>
+      <p>پلتفرمی برای ثبت، پیگیری و تاییدیه معاملات مالی کسب‌وکارها؛ طراحی‌شده برای شرکت‌هایی که به شفافیت و اعتبار نیاز دارند.</p>
+      <div class="hero-badges">
+        <div class="badge">مورد اعتماد شرکت‌های بزرگ</div>
+        <div class="badge">تاییدیه رسمی معاملات</div>
+        <div class="badge">پشتیبانی اختصاصی</div>
+      </div>
+    </div>
+    <div class="signup-card" id="signup">
+      <h2>ثبت‌نام در حساب‌یار</h2>
+      <p class="sub">نام و شماره تماست رو وارد کن تا حسابت ساخته بشه.</p>
+      <form id="signupForm" novalidate>
+        <div class="field">
+          <label for="fullname">نام و نام‌خانوادگی</label>
+          <input type="text" id="fullname" placeholder="مثلاً علی محمدی">
+          <div class="err" id="fullnameErr">نام و نام‌خانوادگی رو وارد کن.</div>
+        </div>
+        <div class="field">
+          <label for="phone">شماره تماس</label>
+          <input type="tel" id="phone" placeholder="09xxxxxxxxx">
+          <div class="err" id="phoneErr">یک شماره تماس معتبر وارد کن.</div>
+        </div>
+        <button type="submit" class="submit-btn">ثبت حساب</button>
+        <div class="success-msg" id="successMsg">حساب شما ثبت شد. به زودی با شما تماس می‌گیریم.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="trust" id="trust">
+  <h3>نمونه معاملات انجام‌شده و شرکت‌های همکار</h3>
+  <div class="trust-logos">
+    <span>شرکت آلفا</span>
+    <span>گروه صنعتی پارس</span>
+    <span>بازرگانی نوین</span>
+    <span>هلدینگ کیان</span>
+  </div>
+</section>
+
+<section class="features">
+  <div class="features-inner">
+    <h2>چرا کسب‌وکارها حساب‌یار را انتخاب می‌کنند</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">✓</div>
+        <h4>تاییدیه رسمی معاملات</h4>
+        <p>هر معامله ثبت‌شده در پلتفرم، تاییدیه معتبر دریافت می‌کند که قابل استناد برای طرفین است.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">◈</div>
+        <h4>مدیریت حساب یکپارچه</h4>
+        <p>تمام حساب‌ها و گردش مالی کسب‌وکار در یک پنل ساده و قابل پیگیری قرار می‌گیرد.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">☎</div>
+        <h4>پشتیبانی اختصاصی</h4>
+        <p>تیم پشتیبانی حساب‌یار همیشه در دسترس است، از طریق دکمه تماس سریع در پایین صفحه.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="support">
+  حساب‌یار — مدیریت حساب و امور مالی کسب‌وکارها &nbsp;|&nbsp; پشتیبانی: ۰۲۱-۰۰۰۰۰۰۰
+</footer>
+
+<a href="tel:+982100000000" class="call-fab" aria-label="تماس با پشتیبانی">☎</a>
+
+<script>
+  const form = document.getElementById('signupForm');
+  const nameInput = document.getElementById('fullname');
+  const phoneInput = document.getElementById('phone');
+  const nameErr = document.getElementById('fullnameErr');
+  const phoneErr = document.getElementById('phoneErr');
+  const successMsg = document.getElementById('successMsg');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid = true;
+    const nameVal = nameInput.value.trim();
+    const phoneVal = phoneInput.value.trim();
+    const phonePattern = /^0\d{10}$/;
+
+    if(nameVal.length < 3){
+      nameErr.style.display = 'block';
+      valid = false;
+    } else {
+      nameErr.style.display = 'none';
+    }
+
+    if(!phonePattern.test(phoneVal)){
+      phoneErr.style.display = 'block';
+      valid = false;
+    } else {
+      phoneErr.style.display = 'none';
+    }
+
+    if(valid){
+      successMsg.style.display = 'block';
+      form.reset();
+    } else {
+      successMsg.style.display = 'none';
+    }
+  });
+
+  nameInput.addEventListener('input', function(){
+    if(nameInput.value.trim().length >= 3) nameErr.style.display = 'none';
+  });
+  phoneInput.addEventListener('input', function(){
+    if(/^0\d{10}$/.test(phoneInput.value.trim())) phoneErr.style.display = 'none';
+  });
+</script>
+
+</body>
+</html>
